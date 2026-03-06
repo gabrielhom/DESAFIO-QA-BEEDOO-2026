@@ -1,0 +1,73 @@
+ID,Suíte,Cenário,Pré-condições,Passos,Resultado Esperado,Resultado Obtido,Status,Severidade,Evidência,Observações
+CT-001,Cadastro - Fluxo Principal,"Cadastro de curso online com todos os campos preenchidos","Estar na página /new-course","1. Preencher 'Nome do curso' com 'Curso de Automação de Testes'
+2. Preencher 'Descrição do curso' com 'Curso completo de automação com Cypress'
+3. Preencher 'Instrutor' com 'João Silva'
+4. Preencher 'Url da imagem de capa' com 'https://picsum.photos/640/480'
+5. Preencher 'Data de início' com '2026-04-01'
+6. Preencher 'Data de fim' com '2026-05-01'
+7. Preencher 'Número de vagas' com '30'
+8. Selecionar 'Online' no campo 'Tipo de curso'
+9. Preencher 'Link de inscrição' com 'https://example.com/inscricao'
+10. Clicar em 'Cadastrar curso'","Mensagem de sucesso exibida; Redirecionamento para '/'; Curso visível na listagem","Curso cadastrado com sucesso. Redirecionamento e exibição na listagem OK.",Aprovado,N/A,evidencias/CT-001.png,
+CT-002,Cadastro - Fluxo Principal,"Cadastro de curso presencial com todos os campos preenchidos","Estar na página /new-course","1. Preencher 'Nome do curso' com 'Workshop de QA'
+2. Preencher 'Descrição do curso' com 'Workshop prático de garantia de qualidade'
+3. Preencher 'Instrutor' com 'Maria Souza'
+4. Preencher 'Url da imagem de capa' com 'https://picsum.photos/640/481'
+5. Preencher 'Data de início' com '2026-06-10'
+6. Preencher 'Data de fim' com '2026-06-12'
+7. Preencher 'Número de vagas' com '20'
+8. Selecionar 'Presencial' no campo 'Tipo de curso'
+9. Preencher 'Endereço' com 'Av. Paulista, 1000 - São Paulo/SP'
+10. Clicar em 'Cadastrar curso'","Mensagem de sucesso exibida; Redirecionamento para '/'; Curso visível na listagem","Curso cadastrado com sucesso. Redirecionamento e exibição na listagem OK.",Aprovado,N/A,evidencias/CT-002.png,
+CT-003,Cadastro - Fluxo Principal,"Cadastro de múltiplos cursos em sequência","Curso A já cadastrado","1. Acessar /new-course
+2. Preencher os campos obrigatórios para 'Curso B'
+3. Clicar em 'Cadastrar curso'
+4. Verificar listagem","Ambos os cursos visíveis na listagem com IDs distintos","Ambos os cursos aparecem na listagem com IDs diferentes.",Aprovado,N/A,evidencias/CT-003.png,
+CT-004,Listagem,"Visualizar listagem vazia quando não há cursos","localStorage limpo (sem a chave @beedoo-qa-tests/courses)","1. Limpar localStorage
+2. Acessar a página '/'","Título 'Lista de cursos' visível; Nenhum card exibido","Título exibido; Nenhum card de curso visível.",Aprovado,N/A,evidencias/CT-004.png,
+CT-005,Listagem,"Visualizar cursos cadastrados na listagem","Pelo menos 1 curso cadastrado","1. Acessar a página '/'
+2. Verificar o card do curso","Card exibe: imagem, tipo, nome, descrição, datas, vagas","Card exibe todos os dados do curso corretamente.",Aprovado,N/A,evidencias/CT-005.png,
+CT-006,Listagem,"Exclusão de curso","Pelo menos 1 curso cadastrado","1. Acessar a página '/'
+2. Clicar em 'Excluir curso' no card","Mensagem 'Curso excluído com sucesso!'; Curso removido da listagem","Mensagem de sucesso exibida, MAS o curso NÃO é removido do localStorage. Ao recarregar a página o curso reaparece.",Reprovado,Alta,evidencias/CT-006.png,BUG-001: Exclusão não funcional
+CT-007,Cenários Negativos,"Cadastro de curso com todos os campos vazios","Estar na página /new-course","1. Não preencher nenhum campo
+2. Clicar em 'Cadastrar curso'","Sistema deveria exibir mensagens de validação e bloquear o cadastro","Curso cadastrado com sucesso sem nenhum dado. Nenhuma validação é exibida.",Reprovado,Crítica,evidencias/CT-007.png,BUG-002: Ausência total de validações
+CT-008,Cenários Negativos,"Cadastro de curso sem selecionar tipo de curso","Estar na página /new-course","1. Preencher apenas o campo 'Nome do curso' com 'Curso Teste'
+2. Manter 'Tipo de curso' como 'Selecione...'
+3. Clicar em 'Cadastrar curso'","Sistema deveria exigir a seleção do tipo","Curso cadastrado com tipo vazio ({label: '', value: ''}).",Reprovado,Alta,evidencias/CT-008.png,BUG-002
+CT-009,Cenários Negativos,"Cadastro com data de fim anterior à data de início","Estar na página /new-course","1. Preencher 'Data de início' com '2026-06-15'
+2. Preencher 'Data de fim' com '2026-06-10'
+3. Preencher demais campos
+4. Clicar em 'Cadastrar curso'","Sistema deveria bloquear o cadastro com mensagem de erro sobre datas","Curso cadastrado com datas inconsistentes sem nenhum alerta.",Reprovado,Alta,evidencias/CT-009.png,BUG-003: Sem validação de datas
+CT-010,Cenários Negativos,"Cadastro com número de vagas negativo","Estar na página /new-course","1. Preencher 'Número de vagas' com '-5'
+2. Preencher demais campos
+3. Clicar em 'Cadastrar curso'","Sistema deveria rejeitar valores negativos","Curso cadastrado com vagas negativas (-5).",Reprovado,Alta,evidencias/CT-010.png,BUG-004: Aceita vagas negativas
+CT-011,Cenários Negativos,"Cadastro com URL de imagem inválida","Estar na página /new-course","1. Preencher 'Url da imagem de capa' com 'texto-invalido'
+2. Preencher demais campos
+3. Clicar em 'Cadastrar curso'","Sistema deveria validar o formato da URL","Curso cadastrado com URL inválida. Card exibe imagem quebrada na listagem.",Reprovado,Média,evidencias/CT-011.png,BUG-005: Sem validação de URL
+CT-012,Cenários Negativos,"Injeção de HTML/XSS no campo de nome","Estar na página /new-course","1. Preencher 'Nome do curso' com '<img src=x onerror=alert(1)>'
+2. Preencher demais campos
+3. Clicar em 'Cadastrar curso'
+4. Verificar a listagem","Script/HTML injetado NÃO deve ser executado; Nome exibido como texto","O HTML é interpretado na listagem pois o campo usa innerHTML. Possível execução de scripts maliciosos.",Reprovado,Crítica,evidencias/CT-012.png,"BUG-006: Vulnerabilidade XSS"
+CT-013,Cenários Negativos,"Cadastro com texto extremamente longo no nome (10.000 caracteres)","Estar na página /new-course","1. Preencher 'Nome do curso' com texto de 10.000 caracteres
+2. Clicar em 'Cadastrar curso'","Sistema deveria limitar o tamanho do campo","Curso cadastrado sem limitação. Interface fica com layout quebrado.",Reprovado,Média,evidencias/CT-013.png,BUG-007: Sem limite de caracteres
+CT-014,Cenários Negativos,"Exclusão de curso não remove do localStorage","Pelo menos 1 curso cadastrado","1. Clicar em 'Excluir curso'
+2. Recarregar a página (F5)","Curso deveria ter sido removido permanentemente","Curso reaparece após reload. O DELETE vai para um endpoint fixo que não existe e não atualiza o localStorage.",Reprovado,Crítica,evidencias/CT-014.png,BUG-001
+CT-015,Validações de Campo,"Campo condicional 'Link de inscrição' para tipo Online","Estar na página /new-course","1. Selecionar 'Online' no campo 'Tipo de curso'","Campo 'Link de inscrição' deve aparecer; Campo 'Endereço' não deve aparecer","Campo 'Link de inscrição' é exibido corretamente. Campo 'Endereço' não aparece.",Aprovado,N/A,evidencias/CT-015.png,
+CT-016,Validações de Campo,"Campo condicional 'Endereço' para tipo Presencial","Estar na página /new-course","1. Selecionar 'Presencial' no campo 'Tipo de curso'","Campo 'Endereço' deve aparecer; Campo 'Link de inscrição' não deve aparecer","Campo 'Endereço' é exibido corretamente. Campo 'Link de inscrição' não aparece.",Aprovado,N/A,evidencias/CT-016.png,
+CT-017,Validações de Campo,"Nenhum campo condicional quando tipo não selecionado","Estar na página /new-course","1. Verificar campos com 'Tipo de curso' em 'Selecione...'","Campos 'Link de inscrição' e 'Endereço' não devem ser exibidos","Nenhum campo condicional é exibido quando tipo não está selecionado.",Aprovado,N/A,evidencias/CT-017.png,
+CT-018,Validações de Campo,"Alternar tipo de curso de Online para Presencial","Estar na página /new-course","1. Selecionar 'Online'
+2. Preencher 'Link de inscrição' com 'https://example.com'
+3. Alterar tipo para 'Presencial'","Campo 'Link de inscrição' desaparece; Campo 'Endereço' aparece","Campos condicionais alternam corretamente ao trocar o tipo.",Aprovado,N/A,evidencias/CT-018.png,
+CT-019,Validações de Campo,"Campo 'Número de vagas' aceita apenas números","Estar na página /new-course","1. Tentar digitar 'abc' no campo 'Número de vagas'","Campo não deve aceitar caracteres não numéricos","Campo é do tipo 'number' e não aceita letras via teclado.",Aprovado,N/A,evidencias/CT-019.png,
+CT-020,Validações de Campo,"Caracteres especiais nos campos de texto","Estar na página /new-course","1. Preencher 'Nome' com 'Curso @#$%! àéîõü'
+2. Preencher 'Descrição' com 'Descrição com acentos: ãõéí'
+3. Cadastrar","Curso cadastrado com caracteres especiais preservados","Caracteres especiais preservados corretamente no cadastro e exibição.",Aprovado,N/A,evidencias/CT-020.png,
+CT-021,Comportamentos Inesperados,"Acessar página inexistente","Estar na aplicação","1. Acessar a URL '/pagina-inexistente'","Página de erro 404 exibida","Página de erro 404 é exibida corretamente.",Aprovado,N/A,evidencias/CT-021.png,
+CT-022,Comportamentos Inesperados,"Navegação entre listagem e cadastro","Estar na página de listagem '/'","1. Clicar no botão 'CADASTRAR CURSO'","Redirecionamento para '/new-course'; Formulário vazio","Redirecionamento correto. Formulário em branco.",Aprovado,N/A,evidencias/CT-022.png,
+CT-023,Comportamentos Inesperados,"Duplo clique no botão 'Cadastrar curso'","Estar na página /new-course com campos preenchidos","1. Preencher todos os campos
+2. Clicar rapidamente duas vezes em 'Cadastrar curso'","Apenas um curso deve ser cadastrado","Dois cursos são criados no localStorage ao clicar duas vezes rapidamente.",Reprovado,Média,evidencias/CT-023.png,BUG-008: Duplo clique duplica cadastro
+CT-024,Comportamentos Inesperados,"Persistência após recarregar página","Pelo menos 1 curso cadastrado","1. Cadastrar um curso
+2. Recarregar a página (F5)","Cursos permanecem visíveis","Cursos persistem corretamente após reload (dados no localStorage).",Aprovado,N/A,evidencias/CT-024.png,
+CT-025,Comportamentos Inesperados,"Exclusão envia ID fixo na requisição DELETE","Múltiplos cursos cadastrados","1. Abrir DevTools > Network
+2. Clicar em 'Excluir curso' em qualquer card
+3. Verificar a requisição","Requisição DELETE deveria usar o ID do curso clicado","Requisição DELETE sempre vai para '/test-api/courses/1' independentemente do curso.",Reprovado,Crítica,evidencias/CT-025.png,BUG-001
