@@ -1,7 +1,6 @@
 # DESAFIO QA BEEDOO 2026
 
-![Cypress](https://img.shields.io/badge/tested%20with-Cypress-04C38E?logo=cypress) ![Node](https://img.shields.io/badge/node-%E2%89%A5%2018-brightgreen?logo=node.js) ![License](https://img.shields.io/badge/license-MIT-blue)
-
+![Cypress](https://img.shields.io/badge/tested%20with-Cypress-04C38E?logo=cypress) ![Node](https://img.shields.io/badge/node-%E2%89%A5%2018-brightgreen?logo=node.js) ![Cypress Tests](https://github.com/gabrielhom/DESAFIO-QA-BEEDOO-2026/actions/workflows/cypress.yml/badge.svg)
 ## Índice
 
 1. [Análise da Aplicação](#1-análise-da-aplicação)
