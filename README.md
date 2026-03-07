@@ -352,16 +352,57 @@ A planilha contém as colunas: ID, Suíte, Cenário, Pré-condições, Passos, R
 
 ## 4. Execução dos Testes e Evidências
 
-As evidências de execução dos testes (screenshots) estão armazenadas no Google Drive:
+### Migração para Cypress
+
+Os 25 casos de teste, originalmente executados manualmente no Google Chrome, foram **automatizados com Cypress**. O arquivo original em Playwright (`executar_testes.py`) foi traduzido para Cypress (`cypress/e2e/cursos.cy.js`) com comandos customizados reutilizáveis (`cypress/support/commands.js`).
+
+### Pré-requisitos
+
+- **Node.js** ≥ 18
+- **npm** (incluído com o Node.js)
+
+### Como executar
+
+```bash
+# 1. Instalar dependências
+npm install
+
+# 2. Executar todos os testes (headless)
+npx cypress run
+
+# 3. Executar com interface gráfica (opcional)
+npx cypress open
+```
+
+### Estrutura dos testes
+
+| Arquivo | Descrição |
+|---|---|
+| `cypress/e2e/cursos.cy.js` | 25 casos de teste automatizados |
+| `cypress/support/commands.js` | Comandos customizados (`clearCourses`, `fillCourse`, `clickCadastrar`, etc.) |
+| `cypress.config.js` | Configuração do Cypress (baseUrl, evidências, vídeo) |
+| `executar_testes.py` | Testes originais em Playwright (mantido como referência) |
+
+### Evidências
+
+As evidências são geradas automaticamente pelo Cypress a cada execução:
+
+- **Screenshots:** `evidencias/screenshots/` — capturados automaticamente em falhas e em pontos estratégicos dos testes (ex: antes de asserções que evidenciam bugs)
+- **Vídeos:** `evidencias/videos/` — gravação completa de cada spec
+
+As evidências também estão disponíveis no Google Drive:
 
 **🔗 [Evidências de Execução — Google Drive](https://drive.google.com/drive/folders/1zNXnQGmg79w63_ewBkLUNJS8Us6M-GTo?usp=sharing)**
 
-As evidências estão também disponíveis localmente na pasta `evidencias/` deste repositório, nomeadas por caso de teste (ex: `CT-001.png`, `CT-002.png`).
+### Resultado esperado
+
+Dos 25 testes, **14 passam** e **11 falham**. As falhas são **intencionais** — cada teste que falha evidencia um bug real na aplicação, documentado na seção 5. Os testes negativos utilizam asserções reais (não apenas `cy.log`) para comprovar os defeitos.
 
 ### Observações sobre a execução
 
-- Todos os testes foram executados manualmente no navegador Google Chrome
+- Testes automatizados com **Cypress 15** (Electron headless)
 - Aplicação testada: https://creative-sherbet-a51eac.netlify.app/
+- Todos os `cy.wait(ms)` foram substituídos por esperas inteligentes (asserções de visibilidade, interceptação de requisições)
 - Para cada caso de teste reprovado, há um bug correspondente registrado na seção 5
 
 ---
