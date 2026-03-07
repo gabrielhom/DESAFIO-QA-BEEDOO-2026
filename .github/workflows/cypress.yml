@@ -1,0 +1,44 @@
+name: Cypress Tests
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  cypress:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v6
+        with:
+          browser: chrome
+        # Não falhar o workflow — 11 testes falham intencionalmente (bugs da aplicação)
+        continue-on-error: true
+
+      - name: Merge Mochawesome reports
+        if: always()
+        run: |
+          npx mochawesome-merge evidencias/report/*.json -o evidencias/report/merged.json
+          npx marge evidencias/report/merged.json -o evidencias/report
+
+      - name: Upload test evidence
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: evidencias
+          path: evidencias/
+          retention-days: 30

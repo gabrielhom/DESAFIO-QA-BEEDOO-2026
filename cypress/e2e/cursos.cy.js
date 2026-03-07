@@ -4,30 +4,16 @@
  */
 
 // ── Fixtures ───────────────────────────────────────────────────────
-const SAMPLE_COURSE_ONLINE = {
-  id: 1,
-  name: 'Curso Visível',
-  description: 'Descrição teste',
-  instructor: 'Prof.',
-  cover: 'https://picsum.photos/640/480',
-  startDate: '2026-04-01',
-  endDate: '2026-05-01',
-  numberOfVagas: 25,
-  type: { label: 'Online', value: 'online' },
-  url: 'https://example.com',
-};
+let SAMPLE_COURSE_ONLINE;
+let courseDefaults;
+
+before(() => {
+  cy.fixture('course-online').then((data) => { SAMPLE_COURSE_ONLINE = data; });
+  cy.fixture('course-defaults').then((data) => { courseDefaults = data; });
+});
 
 const makeCourse = (overrides = {}) => ({
-  id: 1,
-  name: 'Curso Teste',
-  description: 'Desc',
-  instructor: 'Inst',
-  cover: 'https://picsum.photos/640/480',
-  startDate: '2026-04-01',
-  endDate: '2026-05-01',
-  numberOfVagas: 10,
-  type: { label: 'Online', value: 'online' },
-  url: 'https://example.com',
+  ...courseDefaults,
   ...overrides,
 });
 

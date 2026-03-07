@@ -29,6 +29,11 @@ Thumbs.db
 # Coverage
 coverage/
 
+# Cypress generated evidence (regenerated on each run)
+evidencias/screenshots/
+evidencias/videos/
+evidencias/report/
+
 # Temp files
 tmp/
 temp/

@@ -202,6 +202,20 @@ const a = async () => {
 - Qualquer HTML injetado deveria ser sanitizado/escapado antes da renderização
 - Este é um risco de segurança sério que permite ataques como roubo de sessão, redirecionamento malicioso e manipulação da interface
 
+### Classificação de segurança
+
+| Referência | Identificador |
+|---|---|
+| **OWASP Top 10** | [A03:2021 — Injection](https://owasp.org/Top10/A03_2021-Injection/) |
+| **CWE** | [CWE-79 — Improper Neutralization of Input During Web Page Generation (XSS)](https://cwe.mitre.org/data/definitions/79.html) |
+| **Tipo** | Stored XSS (Cross-Site Scripting persistido) |
+
+### Remediação sugerida
+
+- Substituir `innerHTML` por `textContent` no componente Vue que renderiza o nome do curso
+- Alternativamente, usar a diretiva `v-text` ao invés de `v-html` no template
+- Implementar sanitização de entrada no formulário de cadastro (ex: DOMPurify)
+
 ---
 
 ## BUG-007: Sem limitação de caracteres nos campos de texto
