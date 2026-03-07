@@ -21,7 +21,7 @@ module.exports = defineConfig({
     baseUrl: "https://creative-sherbet-a51eac.netlify.app",
     defaultCommandTimeout: 10000,
     retries: {
-      runMode: 1,
+      runMode: 0,
       openMode: 0,
     },
   },
