@@ -2,10 +2,19 @@ name: Cypress Tests
 
 on:
   push:
-    branches: [main, master]
+    branches: [main]
+    paths:
+      - 'cypress/**'
+      - 'cypress.config.js'
+      - 'package.json'
+      - '.github/workflows/cypress.yml' 
+  
   pull_request:
-    branches: [main, master]
-
+    branches: [main]
+    paths:
+      - 'cypress/**'
+      - 'cypress.config.js'
+      - 'package.json'
 jobs:
   cypress:
     runs-on: ubuntu-latest
